@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        需求:现在有一个data变量,需要通过代码知道他的数据类型
+        解决:
+            1.typeof data
+                返回值数据类型:string
+                返回值:"number","boolean","string","undefined",
+                        "object","function","symbol"
+
+                优点:
+                    的确可以快速返回数据的类型
+
+                缺点:
+                    1.对于对象数据类型几乎没有辨别能力
+                    2.null会被错误识别为object
+
+            2.A instanceof B
+                检测A是否是B的实例对象(A是否是B类型)
+                返回值数据类型:boolean
+                判断原理:A.__proto__ === B.prototype
+                        A.__proto__.__proto__  === B.prototype
+                        小总结:其实就是在检测B的原型对象是否有出现在A的原型链上
+
+                优点:
+                    可以精准的判断A是否是B数据类型
+
+                缺点:
+                    他只能判断A是不是B数据类型,无法判断具体是那种类型,必须提前想好B是什么
+
+            3.Object的toString方法
+                数组的toString被js重写过,也就说如果数组toString相当于是把[]去掉,
+                    内部的内容以,拼接成一个字符串
+        */
+      //    var data = [1,2,3];
+      var data = new Date();
+      //    console.log(data instanceof Array)
+
+      // var obj = {
+      //     name:"xiaoming"
+      // }
+      // console.log(obj.toString())
+
+      // console.log(data.toString())
+
+      console.log(
+        Object.prototype.toString.call(data).split(" ")[1].replace("]", "")
+      );
+    </script>
+  </body>
+</html>
