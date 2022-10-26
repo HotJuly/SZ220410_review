@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            读取属性:还顺着隐式原型链向上查找是否具有该属性
+            笔试题注意点:
+                1.他到底是添加属性还是修改原型对象
+                2.如果是修改原型对象,那么修改的时机是在new之前还是new之后
+        */
+        function Person(name){
+            this.name = name;
+        }
+
+        // Person.prototype.c = 1;
+        // Person.prototype = {
+        //     c:1
+        // }
+
+        var p1 = new Person("xiaoming");
+
+        // Person.prototype.c = 1;
+        Person.prototype = {
+            c:1
+        }
+
+        var p2 = new Person("xiaowang");
+
+        console.log(p1.c,p2.c)
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            在js中,对象读取自己没有的属性,会顺着原型链想上查找
+            但是设置属性一定是设置给当前对象的,不会顺着原型链向上走
+        */
+        function Person(name){
+            this.name = name;
+        }
+
+        var p1 = new Person("xiaoming");
+
+        Person.prototype.c = 1;
+
+        p1.c+=1;
+        // p1.c = p1.c + 1;
+        // p1.c = p1.__proto__.c + 1;
+        // p1.c = Person.prototype.c + 1;
+        // p1.c = 1 + 1;
+
+        console.log(p1,p1.c,Person.prototype.c)
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            构造函数
+                只通过函数的声明,是无法区分一个函数到底是不是构造函数的
+                    只有当一个函数被new调用,才能说明这个函数是一个构造函数
+        
+
+            js中内存分为2块
+                栈内存
+                    栈内存中只能存放基本数据类型,引用值,标识
+
+                堆内存
+                    堆内存中可以存放对象数据类型
+                        堆内存可以存放基本数据类型,只不过需要通过属性的形式存储
+
+                变量名和函数名其实是同一个东西,统称为标识
+        */
+       /*
+        原型相关
+            1.每个对象都有隐式原型属性(__proto__)
+            2.每个构造函数都有显式原型属性(prototype)
+                每个构造函数在创建的时候,都会伴生一个对应的原型对象
+
+                请问,普通函数有没有对应的原型对象?
+                    普通函数也具有自己的原型对象,所以可以说每个函数都具有原型对象
+                        只是说普通函数没有自己的实例对象,所以原型对象没有研究必要
+
+            3.每个对象的隐式原型指向了构造函数的显式原型
+            4.每个原型对象都具有constructor属性,指向了自己对应的构造函数
+       
+        为什么要有原型这一套东西?
+            当实例对象使用某个属性,自己身上没有,就会顺着__proto__找到原型对象,
+                查找原型对象是否具有该属性
+
+            目的就是为了减少内存的消耗,让所有的实例对象共享同一个数据
+
+       */
+        // function Person(){
+        // }
+
+        // function person(){
+        // }
+
+        // var p1 = Person();
+        // var p2 = new person();
+
+
+        //-------------------------------
+        // function Person(name){
+        //     this.name = name;
+        // }
+
+        // var p1 = new Person("xiaoming");
+
+        //--------------------------
+        // function Person(name){
+        //     this.name = name;
+        //     // this.eat = function(){
+        //     //     console.log('eat')
+        //     // }
+        // }
+
+        // Person.prototype.eat = function(){
+        //     console.log('eat')
+        // }
+
+        // var p1 = new Person("xiaoming");
+        // var p2 = new Person("xiaoming");
+        // var p3 = new Person("xiaoming");
+        // var p4 = new Person("xiaoming");
+        // console.log(p1.eat === p2.eat)
+        // console.log(p1.__proto__.eat === p2.__proto__.eat)
+        // p1.eat();
+        // p2.eat();
+
+
+        //--------------------------
+        /*
+            new做的事情
+                1.同步调用函数,并将传入的实参传递给形参
+                2.声明this关键字,并声明一个对象存入其中
+                3.会将构造函数当前的显示原型属性,复制一份给实例对象的隐式原型属性
+                4.默认自动返回this(也就是实例对象)
+                    如果返回基本数据类型,还是会返回this
+                    如果返回对象数据类型,那么这个对象就会被成功返回,不会在返回实例对象了
+        
+        */
+        // function Person(name){
+        //     this.name = name;
+        //     return {
+        //         name:"laowang"
+        //     }
+        // }
+
+        // var p1 = new Person("xiaoming");
+
+        function Person(name){
+            var that = {};
+            that.name = name;
+            that.__proto__ = Person.prototype;
+            return that;
+        }
+
+        var p1 = Person("xiaoming");
+        console.log(p1)
+
+
+
+
+    </script>
+</body>
+</html>
