@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+         /*
+           假设具名函数赋值会被提升,那么结果应该是1,1
+           假设具名函数赋值不会被提升,那么结果应该是函数体,函数体
+
+           具名函数表达式中的函数不会被预解析
+            具名函数表达式的函数名,只能够在当前函数内部使用
+                函数名不会影响到外层作用域,它只会在函数内部可见
+                该函数名不能修改,只读
+       */
+        //  var a = 1;
+        //  var obj = {
+        //    a: 2,
+        //    fn:function a() {
+        //         a=3;
+        //         console.log("1", a);
+        //     },
+        //  };
+        //  obj.fn();
+        //  console.log("2", a);
+
+        //  var a = function wrap(){}
+        //  obj.fn = function wrap(){}
+
+        //-------------------
+        (function a(){
+            a=4;
+            console.log('2',a)
+        })();
+        console.log('1',a)
+    </script>
+  </body>
+</html>

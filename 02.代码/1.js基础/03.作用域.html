@@ -157,54 +157,115 @@
       // console.log(2,b)
 
       //--------------------
-    //   var a = 3;
+      //   var a = 3;
 
-    //   function wrap() {
-    //     console.log(a, b);
-    //     var a = 1;
-    //     var b = 2;
+      //   function wrap() {
+      //     console.log(a, b);
+      //     var a = 1;
+      //     var b = 2;
+      //   }
+
+      //   wrap();
+
+      //   console.log(a);
+      //   console.log(b);
+
+      //--------------
+      // function wrap(x,y=4){
+      //     // 形参就是当前函数作用域中的变量,不需要我们声明而已
+      //     console.log(x,y,a,b)
+      //     var y = 5;
+      //     var a = 1;
+      //     var b = 2;
+      // }
+      // wrap();
+
+      // function wrap(x,y){
+      //     // 形参就是当前函数作用域中的变量,不需要我们声明而已
+      //     console.log(y)
+      //     var y = 5;
+      //     console.log(y)
+      // }
+      // wrap();
+
+      //------------------------
+      // var x = 1;
+
+      // function wrap(
+      //     x,
+      //     y=function(){x=3;console.log('two',x)}
+      // ){
+      //     console.log('one',x);
+      //     var x = 2;
+      //     y();
+      //     console.log('three',x);
+      // }
+
+      // wrap();
+
+      // console.log('four',x);
+
+      //------------------------
+      //   var x = 1;
+
+      //   function wrap(
+      //     x,
+      //     y = function () {
+      //       x = 3;
+      //       console.log("two", x);
+      //     }
+      //   ) {
+      //     console.log("one", x);
+      //     // var x = 2;
+      //     y();
+      //     console.log("three", x);
+      //   }
+
+      //   wrap();
+
+      //   console.log("four", x);
+
+      //-------------------------
+
+    //   var x = 1;
+
+    //   function wrap(
+    //     xx,
+    //     y = function () {
+    //       x = 3;
+    //       console.log("two", x);
+    //     }
+    //   ) {
+    //     console.log("one", x);
+    //     var x = 2;
+    //     y();
+    //     console.log("three", x);
     //   }
 
     //   wrap();
 
-    //   console.log(a);
-    //   console.log(b);
+    //   console.log("four", x);
 
-    //--------------
-    // function wrap(x,y=4){
-    //     // 形参就是当前函数作用域中的变量,不需要我们声明而已
-    //     console.log(x,y,a,b)
-    //     var y = 5;
-    //     var a = 1;
-    //     var b = 2;
-    // }
-    // wrap();
+    //-------------------
+      
+    //   var x = 1;
 
+    //   function wrap(
+    //     x = 4,
+    //     y = function () {
+    //       x = 3;
+    //       console.log("two", x);
+    //     }
+    //   ) {
+    //     console.log("one", x);
+    //     var x = 2;
+    //     y();
+    //     console.log("three", x);
+    //   }
 
-    // function wrap(x,y){
-    //     // 形参就是当前函数作用域中的变量,不需要我们声明而已
-    //     console.log(y)
-    //     var y = 5;
-    //     console.log(y)
-    // }
-    // wrap();
+    //   wrap();
 
-    //------------------------
-    var x = 1;
-
-    function wrap(
-        x,
-        y=function(){x=3;console.log('two',x)}
-    ){
-        console.log('one',x);
-        var x = 2;
-        y();
-        console.log('three',x);
-    }
-
-    wrap();
-
-    console.log('four',x);
+    //   console.log("four", x);
     </script>
   </body>
 </html>
