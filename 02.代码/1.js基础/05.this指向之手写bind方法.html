@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            统一称呼:
+                在fn.call(obj)写法中
+                fn函数我们称为被借调函数,call方法称为借调函数
+
+            面试题:请问call和bind区别
+            答案:
+                相同点:
+                    1.都会将接收到的第一个实参,作为被借调函数的this指向(强行改变)
+
+                    2.接收实参的个数相同,都是0->无限个
+                        他们都会将第二个开始的实参,作为数据传给被借调函数使用
+
+                    3.如果第一个实参没传,或者传入的是undefined或者null,
+                        那么被借调函数的this指向会被强行修改成window对象
+
+                不同点:
+                    1.调用被借调函数的时机不同
+                        call方法会立即调用被借调函数
+                        bind方法不会立即调用被借调函数
+
+                    2.返回值不同
+                        call方法的返回值是被借调函数的执行结果
+                        bind方法的返回值是一个被修改了this的全新函数
+
+                    3.修改this指向的时效不同
+                        call方法只会临时修改本轮执行的this指向
+                            只改这一次执行上下文中的this,对后续函数调用没有任何影响
+
+                        bind方法会永久修改返回的函数的this指向
+                            注意:而且后续无法再次修改,即便是使用call,apply,bind也改不了了
+
+                    4.传入实参的次数不同
+                        call方法由于是同步调用被借调函数,所以只能传入一次实参
+                        bind方法由于返回的是一个全新的函数,一共具有两次传入实参的机会
+                        
+        
+        */
+
+        function fn(a,b,c){
+            console.log('fn',this,a,b,c)
+            return a+b+c
+        }
+
+        var obj={
+            name:"xiaoming",
+            fn2:function(){
+                console.log('fn2',this)
+            }
+        }
+
+        // console.log(1)
+        // var result = fn.call(obj,1,2,3);
+
+        // fn();
+
+        // var result1 = fn.bind(obj,3,4);
+        // result1(5);
+        // result1();
+
+        // result1.call(window);
+        // console.log(result1 === fn)
+
+
+        // console.log(2)
+
+        //-------------------------
+        // Function.prototype.myBind=function(thatThis,...args){
+        //     /*
+        //         this->fn(被借调函数)
+        //         thatThis->obj(需要强行改变的this指向)
+        //     */
+
+        //     var that = this;
+
+        //     return function(...args2){
+        //         that.call(thatThis,...args,...args2);
+        //     }
+        // }
+
+        
+        // var result1 = fn.myBind(obj,3,4);
+        // result1(5);
+
+        /*
+            函数柯里化
+                将一个本来需要接收多个实参的函数,拆解成为多个函数嵌套,
+                    每个函数只接受一个参数
+        
+        
+        */
+
+        // function person(name,age,sex){
+        //     return {
+        //         name,
+        //         age,
+        //         sex
+        //     }
+        // }
+        // var p1 = person("xiaohong",23,'女')
+        // // var p2 = person("xiaowang",28,'男')
+        // // var p3 = person("xiaolv",20,'男')
+        // var p2 = person("xiaohong",23,'女')
+        // var p3 = person("xiaohong1",27,'女')
+        // var p4 = person("xiaohong2",28,'女')
+        // var p5 = person("xiaohong3",29,'女')
+
+        
+        // function person(sex){
+        //     return function(name,age){
+        //         return {
+        //             name,
+        //             age,
+        //             sex
+        //         }
+        //     }
+        // }
+        // var woman = person('女');
+        // var p1 = woman("xiaohong",23);
+        // var p2 = woman("xiaohong2",24);
+
+        
+        // function person(sex){
+        //     return function(age){
+        //         return function(name){
+        //             return {
+        //                 name,
+        //                 age,
+        //                 sex
+        //             }
+        //         }
+        //     }
+        // }
+        // var woman = person('女');
+        // var young = woman(18);
+        // var p1 = young("xiaohong");
+        // var p2 = young("xiaohong2");
+
+        // console.log(p1,p2)
+
+        //-------------------------------
+        // 可以快速实现类似于函数柯里化的效果
+        function person(sex,age,name){
+            return {
+                name,
+                age,
+                sex
+            }
+        }
+
+        var young = person.bind(null,'女',18);
+        var p1 = young("xiaohong");
+        var p2 = young("xiaohong2");
+        console.log(p1,p2)
+    </script>
+</body>
+</html>
