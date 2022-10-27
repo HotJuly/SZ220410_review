@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            统一称呼:
+                在fn.call(obj)写法中
+                fn函数我们称为被借调函数,call方法称为借调函数
+
+            面试题:请问call和apply区别
+            答案:
+                相同点:
+                    1.传入的第一个实参都是用于强行指定被借调函数的this指向
+
+                    2.都会同步调用被借调函数
+
+                    3.如果没有传递第一个实参,或者传入的是undefined或者null
+                        那么被借调函数的this指向会被强行修改成window
+
+                    4.都会将被借调函数的返回值,作为自己的返回值进行return
+
+                不同点：
+                    1.传入的实参个数不同
+                        call方法传入实参的个数0->无限个
+                            call方法会将第二个实参开始的数据,传递给被借调函数使用
+
+                        apply方法传入实参的个数0->2个
+                            apply方法会将第二个实参数组解构开来,全部传给被借调函数使用
+        
+        */
+
+        function fn(a,b,c){
+            console.log('fn',this,a,b,c)
+            return a+b+c
+        }
+
+        var obj={
+            name:"xiaoming",
+            fn2:function(){
+                console.log('fn2',this)
+            }
+        }
+
+        // fn(1,2,3)
+
+        // console.log(1)
+        var result = fn.call("str",1,2,3);
+        // var result1 = fn.apply(obj,[3,4,5]);
+        // // console.log(2)
+
+        // console.log(result,result1)
+
+
+        // fn.call();
+        // fn.apply();
+
+        // obj.fn2.call(null);
+        // obj.fn2.apply(null);
+
+        //--------------------------
+        Function.prototype.myCall=function(thatThis,...args){
+            /*
+                this    ->  fn函数(被借调函数)
+                thatThis->  obj(强行指定的this指向)
+            */
+
+
+           if(thatThis ===undefined ||thatThis === null){
+            thatThis = window;
+           }
+
+           if(typeof thatThis ==="number"){
+            thatThis = new Number(thatThis)
+           }
+
+           thatThis._fn = this;
+           var result = thatThis._fn(...args);
+
+           delete thatThis._fn;
+
+           return result;
+        }
+        var result = fn.myCall(7,1,2,3);
+        // // var result = fn.myCall(obj);
+        // console.log(result)
+    </script>
+</body>
+</html>
