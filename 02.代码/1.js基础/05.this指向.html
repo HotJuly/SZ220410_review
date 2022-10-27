@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            this指向
+                this是js中的关键字,我们不能去声明该名称
+                this其实就相当于是一个形参
+                    函数的形参是我们声明的,形参的值是我们调用函数的时候同步传入的
+                    函数的this是浏览器声明的,this的值是浏览器调用函数的时候同步传入的
+                        简单理解,this就是个变量,值是由浏览器赋值的
+
+                this内部存放的,其实就是当前函数的执行者(谁调用了当前函数,this就是谁)
+                this指向与声明位置无关,与调用方式有关
+
+            常见的this指向:
+                1.普通调用->window
+                    例如:fn();
+
+                    注意:其实当前这种调用方式是没有调用者的,结果应该是undefined
+                        但是在非严格模式下,this为undefined的话,会自动变成window
+
+                2.隐式调用->方法存在的实例对象
+                    例如:obj.fn()   -> this就是obj
+
+                    无论找到方法之前,经历了多少层属性读取,只需要关心方法在哪个对象上即可
+
+                3.构造调用->创建出来的实例对象
+                    例如: new fn()
+
+                4.显式调用->强行指定的某个对象
+                    例如: fn.call(obj)-> this就是obj对象
+                    call,apply,bind三者都算
+
+            比较特殊的this指向:
+                1.定时器
+                    this是window对象
+                2.事件的回调函数
+                    div.onclick=function(){}
+                    回调函数中的this是事件源对象
+                        事件源对象就是绑定了事件的元素
+                3.Vue
+                    例如:methods,computed,watch,生命周期等中
+                    this全部都是当前组件的实例对象
+                        原理:其实就是用了bind进行修改了
+                4.小程序
+                    例如:事件回调函数,生命周期等
+                    this是当前页面的实例对象
+                5.React
+                    class组件中
+                    a(){}       =>  this是undefined
+                    a=()=>{}    =>  this是当前组件的实例对象
+                    
+                6.箭头函数
+                    箭头函数的this与父级作用域的this有关
+                        特点:箭头函数的this与声明位置有关,与调用方式无关
+
+
+                面试题:箭头函数能否使用call,apply,bind方法强行修改this指向?
+                答案:不能,箭头函数根本没有自己的this,所以无法强行修改
+
+                面试题2:箭头函数能否构造调用?
+                答案:不能,因为他没有this,所以不可能返回自己的实例对象
+
+                面试题3:箭头函数是否具有自己的原型对象?
+                答案:没有,他不可能拥有自己的实例对象,那就没有必要拥有原型对象
+        */
+       
+        // function fn(){
+        //     console.log('fn',this)
+        // }
+        // fn()
+
+        // function wrap(){
+        //     function fn(){
+        //         console.log('fn',this)
+        //     }
+        //     return fn;
+        // }
+        // var b = wrap();
+        // b();
+
+        //--------------------------
+        // function fn(){
+        //     console.log('fn',this)
+        // }
+        // // fn()
+
+        // var obj = {
+        //     name:"xiaoming",
+        //     fn1:fn
+        // }
+
+        // obj.fn1();
+
+        // a.b.c.d.e.f.g.h.i()
+
+        // var f1 = new fn();
+
+        // fn.call(obj)
+
+        // var obj = {
+        //     fn:()=>{
+        //         console.log(this)
+        //     }
+        // }
+        // obj.fn();
+
+
+        // var obj = {
+        //     name:"xiaoming"
+        // }
+
+        var fn = ()=>{
+            console.log(this)
+        }
+
+        // fn();
+        // fn.call(obj);
+
+        // new fn();
+
+        function a(){}
+
+        console.dir(fn)
+        console.dir(a)
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var length = 6;
+
+        var obj = {
+            length:7,
+            fn:function(){
+                return this.length
+            }
+        };
+
+        (function(){
+
+            var length = 8;
+
+            // arguments他是一个伪数组,用下标存储数据
+            // arguments中会存放的是当前函数接收到的所有的实参
+            console.log(arguments[0]());
+            // arr[1]();
+
+        })(obj.fn);
+
+        //--------------------------
+        
+        // var length = 6;
+
+        // var obj = {
+        //     length:7,
+        //     fn:0X001
+        // };
+
+        // (function(){
+
+        //     var length = 8;
+
+        //     // arguments他是一个伪数组,用下标存储数据
+        //     // 注意:伪数组也是对象
+        //     // obj.fn  obj['fn']
+        //     // arguments中会存放的是当前函数接收到的所有的实参
+        //     // console.log(arguments.0());
+        //     console.log(arguments[0]());
+
+        // })(0X001);
+    </script>
+</body>
+</html>
