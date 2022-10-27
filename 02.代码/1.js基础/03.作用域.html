@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+            前言
+                在编程界中,作用域一共分为两种
+                    动态作用域
+                        当前作用域与函数的声明位置无关,与调用位置有关
+
+                    词法作用域(又称为静态作用域)
+                        当前作用域与函数的声明位置有关,与调用位置无关
+
+            1.作用域的定义
+                变量可以使用的范围
+                约束变量能够访问的区间
+
+                js中,只存在词法作用域,不存在动态作用域
+
+            2.预解析(变量提升)
+                1.函数提升
+                    函数提升属于整体提升,不仅会将标识的声明提升,同时还会将赋值操作也进行提升
+
+                2.变量提升
+                    变量提升属于局部提升,只会将标识的声明提升,不会将赋值语句一起提升
+                        赋值语句会留在原地
+
+                注意:
+                    1.一定要区分清楚标识的声明和标识的赋值
+                    2.函数表达式的提升属于变量提升,只会将标识的声明进行提升
+
+            3.预解析的优先级
+                函数提升优先于变量提升
+
+            4.预解析的范围
+                变量提升只会被提升到当前作用域的最顶端,不会穿透作用域
+
+            5.作用域的类型
+                1.全局作用域
+                    项目一开始运行,整个项目最外层的作用域
+
+                2.局部作用域(又称为函数作用域)
+                    每个函数中都会具有自己独享的一个作用域
+
+                3.块级作用域
+                    他是ES6新增的作用域,当使用了let或者const的时候,就会出现块级作用域
+                        当一个变量的声明使用了let或者const,那么该变量就只能在当前{}中使用,外层无法访问
+                            注意:这个{}是指包裹了let a的大括号
+        
+                注意:
+                    1.作用域只能由内向外查找,不能由外向内查找
+                    2.如果查找一个变量,找遍了作用域链都没找到,会报错,is not define
+                    3.对象和数组都没有作用域,无论是否使用了let
+
+            6.形参默认值
+                一个函数只要使用了形参默认值,那么当前函数就会额外创建出一个块级作用域,
+                    函数中的代码就会在块级作用域中执行
+
+                如果函数内部有与形参同名的变量,而该形参还被赋予了形参默认值,那么内部同名变量也会获取到相同的初始值
+
+
+
+        */
+
+      // var a = 1;
+
+      // function wrap(){
+      //     var a = 2;
+      //     function inner(){
+      //         console.log('a',a)
+      //     }
+      //     return inner;
+      // }
+
+      // var b = wrap();
+      // b();
+
+      //--------------------------------
+      // console.log(a);
+
+      // // var a = new Function("console.log('a',1)");
+      // function a(){
+      //     console.log('a',1)
+      // }
+
+      //----------------------
+
+      // console.log(a)
+      // var a = 1;
+      // 以下代码是标识声明
+      // var a ;
+      // 以下代码是标识赋值
+      // a = 1;
+
+      //提升之后
+      // var a
+      // console.log(a)
+      // a = 1;
+
+      //----------------------
+      // console.log(a)
+
+      // // 函数表达式
+      // var a = function(){
+      //     console.log('a')
+      // }
+      // console.log(a)
+
+      //-------------------
+      // var a = 1;
+
+      // console.log(a)
+
+      // var a = function(){
+      //     console.log(2)
+      // }
+
+      // function a(){
+      //     console.log(3)
+      // }
+
+      //提升之后
+      // function a(){
+      //     console.log(3)
+      // }
+      // var a;
+      // var a;
+
+      // a = 1;
+
+      // console.log(a)
+
+      // a = function(){
+      //     console.log(2)
+      // }
+
+      //-------------------
+      // var a = 1;
+      // let obj = {
+      //     a:2,
+      //     fn:function(){
+      //         console.log('fn',a)
+      //     }
+      // }
+      // obj.fn();
+
+      // if(true){
+      //     let b = 1;
+      //     console.log(b)
+      // }
+      // console.log(2,b)
+
+      //--------------------
+    //   var a = 3;
+
+    //   function wrap() {
+    //     console.log(a, b);
+    //     var a = 1;
+    //     var b = 2;
+    //   }
+
+    //   wrap();
+
+    //   console.log(a);
+    //   console.log(b);
+
+    //--------------
+    // function wrap(x,y=4){
+    //     // 形参就是当前函数作用域中的变量,不需要我们声明而已
+    //     console.log(x,y,a,b)
+    //     var y = 5;
+    //     var a = 1;
+    //     var b = 2;
+    // }
+    // wrap();
+
+
+    // function wrap(x,y){
+    //     // 形参就是当前函数作用域中的变量,不需要我们声明而已
+    //     console.log(y)
+    //     var y = 5;
+    //     console.log(y)
+    // }
+    // wrap();
+
+    //------------------------
+    var x = 1;
+
+    function wrap(
+        x,
+        y=function(){x=3;console.log('two',x)}
+    ){
+        console.log('one',x);
+        var x = 2;
+        y();
+        console.log('three',x);
+    }
+
+    wrap();
+
+    console.log('four',x);
+    </script>
+  </body>
+</html>
