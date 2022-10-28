@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            async和await(他们其实是promise和.then的语法糖)
+                目的:为了实现以同步的流程,书写异步的代码
+                用法:
+                    1.async关键字可以单独使用,需要写在函数声明前面
+
+                    2.await不能单独使用,必须写在async函数内部
+                        注意:其实在目前最新的ES语法中,是可以在顶级作用域中单独使用的
+
+                    3.await关键字右侧可以书写promise对象,那么await表达式的结果就是promise的结果值
+                        await右侧也可以书写其他数据,那么await表达式的结果就是右侧的数据
+
+                    4.await会阻塞后续代码的执行,但是await右侧的代码还是会同步执行
+                        注意:await只能拦截async函数中后续代码的执行,对async之外的没有影响
+
+                返回值:一个全新的promise对象(简称p1对象)
+                    如何控制状态
+                        变为成功
+                            1.只要async函数中的代码全部执行结束,那么p1的状态就是成功状态
+                            2.如果async函数中返回一个成功的promise对象,那么p1的状态就是成功状态
+
+                        变为失败
+                            1.只要async函数中的代码没能执行结束,那么p1的状态就是失败状态
+                            2.await右侧如果出现了失败的promise,后续代码不会执行,
+                                并且p1的状态就是失败状态
+                            3.如果async函数中返回一个失败的promise对象,那么p1的状态就是失败状态
+        
+        */
+        // async function a(){
+        //     console.log(1)
+        //     await new Promise((resolve,reject)=>{
+        //         console.log(2)
+
+        //         setTimeout(resolve,2000);
+        //         // setTimeout(reject,2000);
+        //     })
+        //     // throw new Error()
+        //     console.log(3)
+
+        //     // return 123;
+        //     // return Promise.resolve();
+        //     return Promise.reject();
+        // }
+
+        // console.log(4);
+        // var p1 = a();
+        // console.log(5,p1);
+
+        //------------------------------
+        // function a(){
+        //     console.log(1)
+        //     return new Promise((resolve)=>{
+        //         console.log(2)
+        //         setTimeout(resolve,2000);
+        //     })
+        //     .then(()=>{
+        //         console.log(3)
+        //         // return 123;
+        //     })
+        // }
+
+        // console.log(4);
+        // var p1 = a();
+        // console.log(5,p1);
+
+        //----------------------------------------
+        async function a(){
+            console.log(1)
+            // var result = await 100;
+            var result = await Promise.resolve(99999);
+            console.log(2,result)
+        }
+        
+        console.log(3);
+        a();
+        console.log(4);
+        
+    </script>
+</body>
+</html>
