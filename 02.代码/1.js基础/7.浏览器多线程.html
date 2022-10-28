@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+      <li>aaa</li>
+      <li>bbb</li>
+      <li>ccc</li>
+  </ul>
+  <button id="test">test</button>
+  <div id="content">
+      aaaaaaa
+  </div>
+  <script>
+    /*
+        代码的执行流程:主线程代码优先执行->清空微任务队列->执行下一个宏任务
+    
+        升级版:
+            主线程代码优先执行->清空微任务队列->渲染页面->执行下一个宏任务
+
+        更新页面内容之后:
+            首先清空微任务队列->渲染页面->执行宏任务
+
+        负责页面渲染的是GUI线程
+        他和JS线程(JS引擎)他们是兄弟关系
+        他们两个不会同时执行,是互斥的
+            要么浏览器解析js代码,要么浏览器渲染页面
+
+        问题:为什么要新增微任务这个东西?
+        原因:
+            假设同样是修改1000次页面
+                1000个微任务都执行结束之后,才会渲染一次页面
+                1000个宏任务的话,每次宏任务执行结束,都会根据当前结果渲染一次页面
+                小总结:也就是说微任务修改页面具有防抖效果,
+                    以上案例中,微任务只会导致页面重新渲染1次,宏任务会导致页面重新渲染1000次
+
+                从实际表现上来说:
+                    微任务无论修改多少次页面,最终页面只能看到最后一次的结果
+                    宏任务修改页面,每次修改都可以被用户观察到
+
+        扩展:Vue更新数据是同步更新,Vue更新DOM是异步更新(后台管理系统编辑模式切换)
+            其实Vue更新DOM是微任务
+    */
+
+    /*
+        请问,渲染和挂载是不是同一个东西?
+            挂载:将某些DOM节点添加到html标签中
+            渲染:根据最新的html标签结构,绘制内容到页面上进行展示
+            两者执行顺序,一定是先挂载,再渲染
+    
+            挂载是同步操作,渲染是异步操作
+    */
+      Promise.resolve().then(() => { // 微任务
+          alert('promise1') // 页面渲染了吗?
+      }) 
+
+      Promise.resolve().then(() => { // 微任务
+          alert('promise2') // 页面渲染了吗?
+      }) 
+
+      setTimeout(() => {// 宏任务
+          alert(document.getElementById('content').innerHTML)  // 页面渲染了吗?
+      }, 0)
+
+      document.getElementById('test').onclick = () => {// 宏任务
+        // 此处在修改content内部的html内容,相当于在挂载节点
+        // 是否会立即渲染?  不会立即渲染
+          document.getElementById('content').innerHTML = 'xxxx'
+          document.getElementById('content').innerHTML = 'xxxx1'
+          document.getElementById('content').innerHTML = 'xxxx2'
+          document.getElementById('content').innerHTML = 'xxxx3'
+          document.getElementById('content').innerHTML = 'xxxx4'
+          document.getElementById('content').innerHTML = 'xxxx5'
+          document.getElementById('content').innerHTML = 'xxxx6'
+          document.getElementById('content').innerHTML = 'xxxx'
+
+          alert(document.getElementById('content').innerHTML)
+
+          setTimeout(() => {// 宏任务  
+              alert(document.getElementById('content').innerHTML) // 页面更新渲染了吗?
+          }, 0); 
+
+          Promise.resolve().then(() => { // 微任务 
+              alert('promise3') //页面更新渲染了吗?
+          }) 
+      }
+      
+      alert('1111') // 页面渲染了吗?
+
+  </script>
+</body>
+</html>
