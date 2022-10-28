@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            在js中,一共具有6个false值
+                false,0,NaN,"",undefined,null
+        */
+       /*
+            基本数据类型VS基本数据类型
+            toNumber
+       */
+        // console.log("1",true==1);           //true     1==1
+        // console.log("2",true=="1");         //true     1==1
+        // console.log("3","2"==1);            //false    2==1
+        // console.log("4","a"==1);            //false    NaN==1
+        // console.log("5",true=="true");      //false    1==NaN
+        // console.log("6",true=="false");     //false    1==NaN
+
+        /*
+        语法糖:
+            {}=>new Object
+            []=>new Array
+
+            对象数据类型VS对象数据类型
+                比较地址值,如果相同就是true,不同就是false
+        
+        */
+        console.log("7",[]==[]);    //false   new Array == new Array
+        console.log("8",{}=={});    //false   new Object == new Object
+        console.log("9",[]===[]);   //false   new Array === new Array
+        console.log("10",{}==={});  //false
+        console.log("11",[]!==[]);  //true
+        console.log("13",{}!=={});  //true     new Object !== new Object
+        
+
+        /*
+            对象数据类型VS基本数据类型
+            规则:valueOf->toString
+        
+        */
+        console.log("12",[]==![]);  //true  []==(![])   >   [] == false => "" == false => 0==0
+        console.log("14",{}==!{});  //false {}==(!{})   >   {} == false => '[object Object]' == false
+                                            // '[object Object]' == false => NaN == 0
+
+
+        console.log("15",0=="0") 
+        console.log("16",0==[])  
+        console.log("17","0"==[])   //  => "0"==""  false
+
+    </script>
+</body>
+</html>
