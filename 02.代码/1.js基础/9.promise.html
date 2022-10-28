@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            Promise
+                数据类型:函数(构造函数)
+                函数一共接收几个实参
+                    1个,是执行器函数
+                        执行器函数会被同步调用
+                        执行器函数接收几个参数
+                            实参都是函数数据类型
+                            resolve
+                                如果当前方法被调用,那么p1对象就会变为成功状态
+
+                            reject
+                                如果当前方法被调用,那么p1对象就会变为失败状态
+                                同时会在控制台中出现报错,但是该报错不会影响到后续代码的执行
+
+                返回值:一个promise对象(简称p1对象)
+                    promise对象一共具有几种状态?
+                        1.pending->等待
+                        2.resolved/fulfilled->成功/完成
+                        3.rejected->失败
+
+                        注意:
+                            1.默认值是pending状态
+                            2.promise的状态变化不可逆,只能变化一次
+
+        
+        */
+        var p1 = new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                resolve();   
+            },1000)
+
+            setTimeout(()=>{
+                reject();   
+            },2000)
+            // reject();
+            // console.log(1)
+        })
+        console.log(p1)
+    </script>
+</body>
+</html>
