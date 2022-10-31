@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #wrap {
+        width: 500px;
+        height: 500px;
+        border: 1px solid;
+      }
+      .inner {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        border: 1px solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <div class="inner"></div>
+      <div class="inner"></div>
+      <div class="inner"></div>
+      <h1>我是h1标签</h1>
+    </div>
+    <script>
+      /*
+            事件机制相关内容
+            1.到目前为止,一共出现过几种事件机制?
+                1.事件冒泡机制->微软
+                2.事件捕获机制->网景
+                3.标准事件机制(又称为标准事件流)
+
+            2.标准事件机制中,分为几个阶段?
+                1.捕获阶段
+                    从最外层的document开始,向内逐层触发同类型事件,直到最内层的目标元素为止
+                2.目标阶段
+                    触发当前目标元素身上所有的同类型事件
+                3.冒泡阶段
+                    从最内层的目标元素开始,向外逐层触发同类型事件,知道最外层的document为止
+
+            3.目前所学的绑定事件的语法
+                1.div.onclick=function(){}
+                    本质:给div对象添加onclick属性,并进行赋值才做
+                        注意:从语法上就决定了,当前方案只能给click绑定一个回调函数
+                    阶段:冒泡阶段
+
+                2.div.addEventListener('click',function(){},布尔值)
+                    本质:调用div对象身上的addEventListener方法
+                        从语法上就决定了,当前方案可以给click绑定多个回调函数
+                    阶段:都可以
+                        通过第三个参数可以控制
+                            true->捕获阶段
+                            false(默认值)->冒泡阶段
+                        
+            4.如何阻止冒泡?
+                1.event.cancelBubble = true;
+                2.event.stopPropagation();
+                扩展题:如何阻止捕获?
+                    event.stopPropagation方法在哪个阶段触发,就是阻止哪个操作
+
+            5.问题:我们到底是绑定了事件还是事件的回调函数?
+                简单说法:给div绑定click事件
+                完整说法:给div的click事件绑定事件回调函数
+                一个节点具有哪些事件,都是W3C制定的,我们没办法新增一个事件
+        */
+      /*
+        事件委托/事件委派
+        1.什么是事件委托?
+            将子节点的事件绑定在父节点身上
+        
+        2.事件委托的实现原理
+            事件冒泡
+
+        3.事件委托的好处
+            1.一劳永逸
+                后续新增的子节点,也可以享受到之前绑定的事件委托
+
+            2.节省内存空间
+                可以将原本需要绑定的多个回调函数,变成一个,减少内存的占用
+       
+        4.事件委托中,存在几种角色?
+            1.事件源
+                绑定了事件的元素对象,例如上述的wrap
+            2.触发者
+                触发了当前事件的最内层元素(目标元素),例如上述的inner
+
+        5.在事件的回调函数中,如何找到以上两个角色?
+            事件源->this
+            触发者->event.target
+
+        6.在Vue/小程序等框架中,如何找到上述两个角色?
+            事件源->event.currentTarget
+            触发者->event.target
+
+       */
+
+      //    inner.onclick=function(){
+      //     console.log('inner')
+      //    }
+
+      // var inners= document.querySelectorAll('.inner');
+      // inners.forEach((inner)=>{
+      //    inner.onclick=function(){
+      //     console.log('inner')
+      //    }
+      // })
+
+      // setTimeout(()=>{
+      //     var div = document.createElement('div');
+      //     div.className = "inner";
+      //     wrap.appendChild(div)
+      // },2000)
+
+      // wrap.onclick=function(){
+      //     console.log('inner')
+      // }
+
+      function bindEvent2(ele, type, fn, selector) {
+        // ele->wrap , type->''click , -> fn->事件回调函数 - >selector->'.inner'
+        ele.addEventListener(type, function (event) {
+          const target = event.target;
+          if (selector) {
+            // matches方法可以检测当前对象是否满足传入的选择器要求
+            // 满足就返回true，不满足就返回false
+            if (target.matches(selector)) {
+              fn.call(target, event);
+            //   fn();
+            }
+          } else {
+            fn.call(ele, event);
+          }
+        });
+      }
+
+      bindEvent2(wrap,'click',function(){
+          console.log('inner',this)
+      },'.inner')
+    </script>
+  </body>
+</html>
