@@ -43,14 +43,116 @@
       // console.log(mutations)
 
       //------------------------
-      const obj = {
-        name: "xiaoming",
-        age: 23,
-      };
+    //   const obj = {
+    //     name: "xiaoming",
+    //     age: 23,
+    //   };
 
-    //   const {name:name} = obj;
-      const {name} = obj;
-        console.log(name)
+    // //   const {name:name} = obj;
+    //   const {name} = obj;
+    //     console.log(name)
+
+    //--------------------------
+    // const str = "abcd";
+    // console.log(str.indexOf('bc'))
+    // console.log(str.includes('bc'))
+
+    //-------------------
+    // 扩展运算符 ...
+
+    // 1.在声明形参的时候使用,代表收集剩余的参数
+    // function fn(a,b,c,...d){
+    //     console.log(a,b,c,d)
+    // }
+
+    // const arr = [1,2,3,4,5,6,7];
+
+    // // 2.调用函数的时候使用,代表将一个数组拆成多个实参进行传入
+    // fn(...arr)
+
+
+    //3.用于将一个对象解构到另一个对象中,实现浅拷贝效果
+    // const obj = {
+    //     name:"xiaoming",
+    //     age:23
+    // }
+
+    // const obj2 = {
+    //     sex:"男",
+    //     name:"xiaohong",
+    //     ...obj
+    // }
+
+    // // console.log(obj2)
+
+    // 4.将剩余的属性全部收集到一个全新的对象中
+    // const {name:name,...obj3} = obj2;
+    // console.log(obj3)
+
+    // const arr = [1,2,3]
+    // const arr1 = [...arr,4,5,6]
+    // console.log(arr1)
+
+    // const [one,...two] = arr1;
+    // console.log(one,two)
+
+    //---------------------------
+    // 基本数据类型不存在深拷贝,浅拷贝
+    // 所谓的浅拷贝,就是当数组或对象中,内部的属性值是对象数据类型,才有可能出现浅拷贝的情况
+    // const arr = [1,2,3]
+    // const arr1 = [...arr,4,5,6];
+    // arr1[0] = 8;
+    // console.log(arr,arr1)
+
+
+    // 讨论浅拷贝和深拷贝的前提:也就是说旧数组中存在对象数据数据类型
+    /*
+        浅拷贝:当进行拷贝操作的时候,堆内存中没有额外开辟一片全新的内存空间
+            浅拷贝的时候,只是对被拷贝的数组中的内容直接复制地址值
+                后续如果修改该对象,会影响到刚才浅拷贝得到的新数组的情况(会互相影响)
+
+        深拷贝:当进行拷贝操作的时候,堆内存中会额外开辟一片全新的内存空间
+            深拷贝的时候,如果遇到对象,会根据该对象创建一个一模一样的全新对象
+                后续如果修改该对象,不会影响到另外一个数组的情况(互不影响)
+        
+    
+    */
+    // const arr = [{
+    //     name:"xiaoming",
+    //     age:23
+    // }]
+    // const arr1 = [...arr];
+    // // console.log(arr===arr1)
+    // // console.log(arr[0]===arr1[0])
+    // arr[0].age=26
+    // console.log(arr[0],arr1[0])
+
+
+    //------------------------
+    // const obj = {
+    //     name:"xiaoming",
+    //     age:23
+    // }
+
+    // // const obj2 = {...obj,sex:"男"};
+    // const obj2 = {sex:"男"};
+    // // obj2.name=obj.name;
+    // // obj2.age=obj.age;
+
+    // Object.assign(obj2,obj);
+    
+    // // this.$data->里面存放的是当前Vue组件实例对象的data数据
+    // //this.$options->可以找到当前组件的配置对象
+    // // this.$options.data->可以找到当前组件初始化时候使用data函数,
+    // // 该函数如果被调用,就会返回一个全新的空的data对象,将新对象的所有属性给旧的$data来一份进行覆盖
+    // // Object.assign(this.$data, this.$options.data());
+
+    // console.log(obj2)
+
+    //---------------------
+    // a?.b?.c => a&&a.b&&a.b.c
+    // a?.b => a&&a.b
+
     </script>
   </body>
 </html>
