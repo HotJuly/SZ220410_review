@@ -37,6 +37,7 @@
 
         .then函数
             用处:监视p1对象的状态变化,如果状态发生变化就执行对应的回调函数
+                严格来说,不仅可以监视状态的变化,而且只要状态不是pending,就会触发对应的回调函数
 
             接收参数个数
                 2个(数据类型都是函数)
@@ -169,24 +170,37 @@
         
         //----------------------------------
         
-        var p1 = new Promise((resolve,reject)=>{
-            setTimeout(()=>{
-                reject();   
-            },1000)
+        // var p1 = new Promise((resolve,reject)=>{
+        //     setTimeout(()=>{
+        //         reject();   
+        //     },1000)
+        // })
+
+        // p1
+        // .then(()=>{
+        //     console.log(1)
+        // })
+        // .catch(()=>{
+        //     console.log(3)
+        // })
+        // .then(()=>{
+        //     console.log(4)
+        // },()=>{
+        //     console.log(5)
+        // })
+
+        //-----------------------------------
+        var p1 = new Promise((resolve)=>{
+            setTimeout(resolve,2000)
         })
 
-        p1
-        .then(()=>{
-            console.log(1)
-        })
-        .catch(()=>{
-            console.log(3)
-        })
-        .then(()=>{
-            console.log(4)
-        },()=>{
-            console.log(5)
-        })
+        setTimeout(()=>{
+            p1.then(()=>{
+                console.log(1)
+            })
+        },3000)
+
+        Promise.resolve().then(()=>{console.log(2)})
         
 
     </script>
