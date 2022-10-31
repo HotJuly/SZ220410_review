@@ -1,0 +1,38 @@
+# 区别localStorage,sessionStorage以及cookie
+
+1. 生命周期
+   1. cookie
+      1. 如果有max-age属性,只要当前时间没有超过最大的存活时间,那么就会长期存在
+      2. 如果没有max-age属性,那么当前cookie就是会话级cookie,只要关闭标签页或者浏览器,数据就会丢失
+   2. localStorage(持久化存储)
+      1. 只要不主动删除该数据,那么存储于内部的数据将会永久存在
+   3. sessionStorage(会话级存储)
+      1. 关闭标签页或者关闭浏览器,都会导致sessionStorage中的数据丢失
+      2. 注意:刷新页面是不会销毁sessionStorage的
+2. 存储位置
+   1. cookie
+      1. 如果有max-age属性,存储于硬盘中
+      2. 如果没有max-age属性,存储于内存中
+   2. localStorage(持久化存储)
+      1. 存储于硬盘中
+   3. sessionStorage(会话级存储)
+      1. 存储于内存中
+3. 存储大小
+   1. cookie->4KB
+   2. localStorage->一般都是5MB,IE是3012KB
+   3. sessionStorage->一般都是5MB,IE是3012KB
+4. 与服务器之间的关系
+   1. cookie(被借用的本地存储)
+      1. cookie是服务器创建,浏览器存储
+      2. 服务器会在响应头中添加**set-cookie**属性,属性值是cookie的数据,来向浏览器传递数据
+      3. 浏览器会在请求头中添加**cookie**属性,属性值是所有cookie拼接的结果,来向服务器发送数据
+      4. 在传递的过程中,浏览器需要自动存储,自动发送cookie,而服务器只需要在响应头中添加属性名即可
+   2. localStorage
+      1. 与服务器不熟,没有任何关系
+   3. sessionStorage
+      1. 与服务器不熟,没有任何关系
+5. 面试题:如何跨标签通信?
+   1. 假设场景,A页面存储数据,B页面接收使用数据
+   2. 通过localStorage实现
+      1. B页面通过给window绑定事件监听localStorage的存储,事件名:storage
+      2. A页面通过API给当前网页存储localStorage数据,就会触发B页面的事件监听
