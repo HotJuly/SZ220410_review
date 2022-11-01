@@ -14,11 +14,19 @@
 
 ### 	4.Host头处理
 
-​			在HTTP1.1中,每个请求和响应都必须写在HOST
+​			在HTTP1.1中,每个请求和响应都必须有HOST属性
 
 ### 	5.长连接
 
 ​			HTTP 1.1支持长连接（PersistentConnection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟，在HTTP1.1中默认开启Connection： keep-alive
+
+​			通道默认保留30s不关闭,30s无人使用就自动拆除
+
+​			所谓的长连接通道,就是之前说的请求并发数,Chrome和FireFox是6个,小程序是10个
+
+​				实际上是浏览器与每个服务器之间都能建立最多6个通道
+
+​		参考文档:https://www.jb51.net/web/614772.html
 
 
 
