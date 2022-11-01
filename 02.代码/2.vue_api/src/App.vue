@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-      <button v-if="!isEdit" @click="changeEdit">添加</button>
-      <input ref="input678" v-else type="text">
+    <h1>{{ msg }}</h1>
+    <h1>name:{{ user.name }}</h1>
+    <!-- <h1>age:{{ user.age | myFilter }}</h1> -->
+    <HelloWorld msg="hello"/>
   </div>
 </template>
 
@@ -10,78 +12,82 @@ import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  data(){
-    return{
-      isEdit:false
+  data() {
+    return {
+      msg: "我是初始数据",
+      user: {
+        name: "xiaoming",
+        age:28
+      }
     }
   },
   components: {
     HelloWorld
   },
-  methods:{
-    changeEdit(){
-      /*
-        面试题:请问Vue更新数据是同步更新还是异步更新?
-          同步更新
-      
-        面试题2:请问Vue更新DOM是同步更新还是异步更新?
-          异步更新
+  mounted() {
+    /*
+      响应式属性
+        定义:
+          当某个属性的值被修改之后,页面会展示出最新的结果
+          反之,如果修改某个属性,结果页面没有显示出最新的值,那么就说明当前属性是一个非响应式属性
 
-        nextTick
-          语法:在调用函数的时候,传入一个回调函数即可
+        创建时机:
+          1.当组件初始化的时候,会将data函数返回的对象变为响应式对象
+              data对象中所有的属性都会变成响应式属性
 
-          返回值:如果没传入回调函数,就是promise对象
+          2.当修改某个响应式属性的值的时候,如果属性值是一个对象,
+            那么该对象中所有的属性都会变成响应式属性
 
-          用处:当组件的DOM更新之后,才会执行传入的回调函数
-            也就是说,在回调函数中,一定可以获取到当前最新的DOM节点
+        如何将非响应式属性变为响应式的
+          1.Vue.set
+          2.vm.$set
+          3.Vue.observable
 
-          原理:通过异步任务延迟回调函数的执行,严格来说是微任务
-            其实nextTick使用.then实现的
+        如何快速分辨一个属性是否是响应式属性?
+          直接打印具有属性的对象,如果该属性是直接显示原值,那一定不是响应式属性
+              如果打印结果是...,那么就是响应式属性
 
-          注意:
-            1.其实在更新状态数据的时候,DOM更新用到了nextTick
-              也就是说,更新DOM是微任务
+        Vue响应式的BUG
+          1.新增一个属性,该属性不会是响应式的
+          2.使用delete关键字删除一个属性,属性值会被删除,但是没有响应式效果
+    */
 
-            2.不要在更新数据之前调用nextTick,因为这样无法获取到最新的DOM节点
+    // this.msg = "我是修改之后的数据"
 
-      */
+    // this.user.name = "xiaohong"
+    // this.user.age = 23;
 
-      this.isEdit = true;
+    // console.log(this.user)
 
-      this.$nextTick(()=>{
-        this.$refs.input678.focus();
-      })
+    // this.user = {
+    //   ...this.user,
+    //   age:23
+    // }
+    // this.$set(this.user,"age",23)
+
+    // setTimeout(()=>{
+    //   this.user.age = 28;
+    // },2000)
 
 
-      
-      // 这里似乎有一个看不见的nextTick
+    // this.user = {
+    //   name: "xiaoming"
+    // }
 
-      // Promise.resolve().then(()=>{
-      //   console.log(1)
-      // })
+    // this.user.age = 23;
 
-      // this.isEdit = true;
+    // setTimeout(() => {
+    //   this.user.age = 28;
+    //   console.log(this.user)
+    // }, 2000)
 
-      // this.$nextTick(()=>{
-      //   console.log(2)
-      // })
+    //--------------------------------
+    // delete this.user.name;
+    // this.$delete(this.user, "name")
+    // console.log(this.user)
 
-      // Promise.resolve().then(()=>{
-      //   console.log(3)
-      // })
-
-      // this.$nextTick(()=>{
-      //   console.log(4)
-      // })
-
-    }
-  },
-  mounted(){
-
-    // console.log(1,this.isEdit)
-    // this.isEdit = false;
-    // console.log(2,this.isEdit)
-    // debugger
+    //----------------------------
+    // console.log(this.$options.name)
   }
 }
 </script>
