@@ -1,32 +1,48 @@
 <template>
   <div id="app">
-    <h1>App的data1:{{data1}}</h1>
-    <HelloWorld msg="Welcome to Your Vue.js App" v-model="data1"/>
-    <!-- 以上代码原理等同于以下代码 -->
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" :a="a" :b="b" :c="c"/> -->
+    <!-- v-bind可以接收一个对象,对象中的属性名会变为标签属性名,属性值就是标签属性值 -->
     <!-- <HelloWorld 
     msg="Welcome to Your Vue.js App"
-    :value="data1"
-    @input="(data)=>data1=data"
+    v-bind="{
+      a,
+      b,
+      c
+    }"
     /> -->
-    
-    <!-- <input type="text" v-model="msg1"> -->
-    <!-- 以上代码原理等同于以下代码 -->
-    <input type="text" :value="msg1" @input="(event)=>msg1=event.target.value">
+    <!-- <HelloWorld 
+    msg="Welcome to Your Vue.js App"
+    v-bind="$data"
+    @click="handler1"
+    /> -->
+
+    <HintButtonVue size="big" type="danger" title="删除" @click="handler1"/>
+    <HintButtonVue size="small" type="primary" title="编辑"/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import HintButtonVue from './components/HintButton.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    HintButtonVue
   },
   data(){
     return{
-      data1:"我是App组件的数据",
-      msg1:"1234"
+      a:1,
+      b:2,
+      c:3
+    }
+  },
+  mounted(){
+  },
+  methods:{
+    handler1(){
+      console.log('handler1')
     }
   }
 }

@@ -8,17 +8,23 @@
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String,
-    a:Number
+    msg: String
   },
   data(){
     return{
       data1:6
     }
   },
+  methods:{
+    a(){
+      console.log('a')
+    }
+  },
   mounted(){
-    // console.log(this.$props,this.$attrs)
-    console.log(this.$listeners)
+    // 找到父组件的实例对象,就相当于是父组件代码中的this
+    // console.log('parent',this.$parent.msg)
+
+    // console.log('root',this.$root.msg3)
   }
 }
 </script>
