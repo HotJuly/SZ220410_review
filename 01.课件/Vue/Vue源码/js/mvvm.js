@@ -56,8 +56,47 @@ function MVVM(options) {
   // ["msg","person"].forEach(function (key) {
   //   vm._proxy("msg");
   // });
+  /*
+    需求:当某个属性的值发生修改的时候,页面自动展示最新的结果
+    拆解:
+        1.当某个属性的值发生修改的时候
+          通过Object.defineProperty可以将一个属性变为get/set方法
+            通过set方法,我们可以知道开发者是否有修改某个属性值
 
+        2.页面自动展示最新的结果
+          可以通过原生DOM的增删改查,对页面节点进行修改,从而展示最新结果
+  
+  */
+
+  /*
+    MVVM源码第二部分:数据劫持
+    劫持:将某个人绑架,限制他的人身自由,强迫他做一些自己不想做的事
+  
+    目的:将data中所有的属性都变成get/set方法,从而可以监视到用户是否有修改属性值的操作
+
+    次数:4次(数据劫持的次数与data对象中所有的属性个数有关)
+
+    流程:
+      1.将data对象传入observe函数中,判断data是不是一个对象
+      2.如果是一个对象,就创建一个ob实例对象,并执行walk方法
+      3.在walk方法中,会获取到所有的直系属性名进行遍历,执行defineReactive方法
+      4.在defineReactive方法中,
+        1.创建一个对应的dep对象
+        2.将当前属性的value,传入observe函数中,进行深度数据劫持
+          如果value是一个对象数据类型,就回到流程1,继续递归
+        3.执行Object.defineProperty方法,对data对象中所有的属性进行重写操作
+          -将value属性的值使用闭包的方式保存起来,留作后面使用
+          -将对应的属性改为get/set方法
+            如果开发者读取当前属性的值,就会执行get方法,并返回闭包val中的数据
+            如果开发者修改当前属性的值,就会执行set方法
+              -判断新值是否等于旧值,如果相同就直接返回
+              -将新值存入闭包中,留作下次使用
+              -将传入的新值进行深度数据劫持操作
+              -使用dep.notify方法通知DOM进行更新
+  
+  */
   observe(data, this);
+  // observe(data, vm);
 
   this.$compile = new Compile(options.el || document.body, this);
 
