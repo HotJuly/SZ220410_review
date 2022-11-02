@@ -1,49 +1,31 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" :a="a" :b="b" :c="c"/> -->
-    <!-- v-bind可以接收一个对象,对象中的属性名会变为标签属性名,属性值就是标签属性值 -->
-    <!-- <HelloWorld 
-    msg="Welcome to Your Vue.js App"
-    v-bind="{
-      a,
-      b,
-      c
-    }"
-    /> -->
-    <!-- <HelloWorld 
-    msg="Welcome to Your Vue.js App"
-    v-bind="$data"
-    @click="handler1"
-    /> -->
-
-    <HintButtonVue size="big" type="danger" title="删除" @click="handler1"/>
-    <HintButtonVue size="small" type="primary" title="编辑"/>
+    <h1>App的title:{{title}}</h1>
+    <!-- <HelloWorld :title.sync="title" msg="Welcome to Your Vue.js App"/> -->
+    <!-- 以上代码等同于以下代码 -->
+    <HelloWorld 
+    :title="title"
+    @update:title="(data)=>title=data"
+    msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import HintButtonVue from './components/HintButton.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld,
-    HintButtonVue
-  },
   data(){
-    return{
-      a:1,
-      b:2,
-      c:3
+    return {
+      title:"我是APP"
     }
+  },
+  components: {
+    HelloWorld
   },
   mounted(){
-  },
-  methods:{
-    handler1(){
-      console.log('handler1')
-    }
+    // console.log(2)
+    this.$bus.$emit('sendMsg',678)
   }
 }
 </script>

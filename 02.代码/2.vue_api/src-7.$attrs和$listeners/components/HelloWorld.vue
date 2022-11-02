@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2 @click="changeTitle">子组件的title:{{title}}</h2>
   </div>
 </template>
 
@@ -10,18 +9,16 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String,
-    title:String
+    a:Number
   },
-  methods:{
-    changeTitle(){
-      this.$emit('update:title','修改成功了')
+  data(){
+    return{
+      data1:6
     }
   },
   mounted(){
-    // console.log(1)
-    this.$bus.$on('sendMsg',(data)=>{
-      console.log('data',data)
-    })
+    // console.log(this.$props,this.$attrs)
+    console.log(this.$listeners)
   }
 }
 </script>
