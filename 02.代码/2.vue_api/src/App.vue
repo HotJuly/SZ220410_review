@@ -1,35 +1,49 @@
 <template>
   <div id="app">
-    <!-- <keep-alive include="A"> -->
-    <keep-alive exclude="A">
-      <AVue v-if="isShow"/>
-      <BVue v-else/>
-    </keep-alive>
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App">
+      <template v-slot:default>
+        <h1>我是默认插槽</h1>
+      </template>
+      <template v-slot:header>
+        <h1>我是header插槽</h1>
+      </template>
+      <template #footer="scope">
+        <h1>我是footer插槽,{{scope.msg1}}</h1>
+      </template>
+    </HelloWorld> -->
+    <BigImage v-bind="$data">
+      <template v-slot:content="scope">
+        <h1 v-on="scope">点我查看</h1>
+      </template>
+    </BigImage>
 
-    <button @click="changeShow">切换组件</button>
+    <!-- <BigImage :url="url" :srcList="srcList">
+      <template v-slot:content="scope">
+        <h1 v-on="scope">点我查看</h1>
+      </template>
+    </BigImage> -->
   </div>
 </template>
 
 <script>
-import AVue from './components/A.vue';
-import BVue from './components/B.vue';
+import BigImage from './components/BigImage.vue';
+import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  data(){
-    return{
-      isShow:true
-    }
-  },
-  methods:{
-    changeShow(){
-      this.isShow=!this.isShow
+  data() {
+    return {
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      srcList: [
+        'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+        'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
+      ]
     }
   },
   components: {
-    AVue,
-    BVue,
-}
+    HelloWorld,
+    BigImage
+  }
 }
 </script>
 
