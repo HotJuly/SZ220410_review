@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <!-- <keep-alive include="A"> -->
-    <keep-alive exclude="A">
-      <AVue v-if="isShow"/>
-      <BVue v-else/>
-    </keep-alive>
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <!-- <AVue v-if="isShow"/>
+    <BVue v-else/> -->
 
-    <button @click="changeShow">切换组件</button>
+    <component :is="showComponent"></component>
+    <button @click="changeShow">显示A组件</button>
   </div>
 </template>
 
 <script>
+// import HelloWorld from './components/HelloWorld.vue'
 import AVue from './components/A.vue';
 import BVue from './components/B.vue';
 
@@ -18,17 +18,20 @@ export default {
   name: 'App',
   data(){
     return{
-      isShow:true
+      isShow:true,
+      showComponent:AVue
     }
   },
   methods:{
     changeShow(){
-      this.isShow=!this.isShow
+      // this.isShow=false
+      this.showComponent = BVue;
     }
   },
   components: {
-    AVue,
-    BVue,
+    // HelloWorld,
+    // AVue,
+    // BVue,
 }
 }
 </script>
