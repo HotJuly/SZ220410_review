@@ -82,6 +82,7 @@ function MVVM(options) {
       3.在walk方法中,会获取到所有的直系属性名进行遍历,执行defineReactive方法
       4.在defineReactive方法中,
         1.创建一个对应的dep对象
+          也就是说,每个响应式属性都会生成一个对应的dep对象
         2.将当前属性的value,传入observe函数中,进行深度数据劫持
           如果value是一个对象数据类型,就回到流程1,继续递归
         3.执行Object.defineProperty方法,对data对象中所有的属性进行重写操作
@@ -98,7 +99,28 @@ function MVVM(options) {
   observe(data, this);
   // observe(data, vm);
 
+  /*
+    MVVM源码第三部分:模版解析
+    目的:
+      1.将el元素的中内容作为模板解析,将差值表达式变成对应的状态数据显示
+      2.根据项目情况,生成watcher对象
+
+    流程:
+      1.将el属性传入Compile方法中,该方法会找到页面对应的真实DOM
+      2.将el元素中的所有子节点都转移到文档碎片中
+      3.开始解析文档碎片中的内容,获取到文档碎片中所有的子节点,并进行遍历操作
+      4.根据不同的节点类型,执行不同的功能
+        -如果是元素节点,就获取他所有的标签属性,检查是否具有Vue指令
+        -如果是文本节点,而且满足插值语法的正则匹配,就开始解析该文本节点的内容
+          每个插值表达式都会触发一次bind方法
+      5.在bind方法中,会获取到文本更新器函数,以及当前差值表达式对应的状态数据结果
+        -调用文本更新期函数,更新当前文本节点的内容
+        -同时创建一个watcher对象
+          也就是说,每个插值表达式会生成一个对应的watcher对象
+
+  */
   this.$compile = new Compile(options.el || document.body, this);
+  // this.$compile = new Compile("#app", vm);
 
 }
 

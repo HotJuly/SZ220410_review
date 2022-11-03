@@ -7,6 +7,7 @@
   <body>
     <div id="app">
       <p class="b">{{msg}}</p>
+      <p class="b">{{person.name}}</p>
     </div>
     <script src="./js/observer.js"></script>
     <script src="./js/watcher.js"></script>
@@ -51,6 +52,17 @@
           }
         }
       });
+
+      // vm.msg = "hello world";
+      /*
+        以上代码会触发的代码流程:
+          1.对vm.msg进行赋值操作,会触发数据代理的set方法
+
+          2.数据代理的set方法中,会执行vm._data.msg = 新值这行代码
+            该代码会修改_data对象中的某些属性,从而触发数据劫持的set方法
+            
+          3.在数据劫持的set方法被触发的时候,会通知DOM进行更新
+      */
 
 
     </script>
