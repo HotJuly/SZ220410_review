@@ -162,6 +162,7 @@ function callActivatedHooks (queue) {
  * pushed when the queue is being flushed.
  */
 export function queueWatcher (watcher: Watcher) {
+  // queueWatcher(watcher)
   const id = watcher.id
   if (has[id] == null) {
     has[id] = true
