@@ -1,51 +1,31 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ul>
+      <li v-for="(item, index) in arr" :key="index">
+        <label>{{ item }} - </label>
+        <input type="text">
+      </li>
+    </ul>
+    <button @click="changeNum">修改数据</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  },
-  data(){
-    return{
-      msg:123
+  data() {
+    return {
+      arr: [1, 2, 3, 4, 5]
     }
   },
-  beforeCreate(){
-    // console.log('--------beforeCreate--------',this,this.$data,this.msg,this.$el)
-    console.log('--------App beforeCreate--------')
-  },
-  created(){
-    // console.log('--------created--------',this,this.$data,this.msg,this.$el)
-    console.log('--------App created--------')
-  },
-  beforeMount(){
-    // console.log('--------beforeMount--------',this,this.$data,this.msg,this.$el)
-
-    // 通过以下代码打印,可以得知,beforeMount之前是不会生成VNode
-    // console.log('--------beforeMount--------',this.$vnode,this._vnode)
-    console.log('--------App beforeMount--------')
-  },
-  mounted(){
-    // console.log('--------mounted--------',this,this.$data,this.msg,this.$el)
-    console.log('--------App mounted--------')
-  },
+  methods:{
+    changeNum(){
+      this.arr.splice(1,0,6);
+    }
+  }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
