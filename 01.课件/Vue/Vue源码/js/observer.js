@@ -122,12 +122,20 @@ function Dep() {
 
 Dep.prototype = {
     addSub: function(sub) {
+        // dep.addSub(watcher);
 
+        // 这一行代码,实现了dep对象收集到与他相关的watcher对象了
+        // 当前响应式属性收集到了用到了他的插值表达式
         this.subs.push(sub);
+        // this.subs.push(watcher);
     },
 
     depend: function() {
+        // dep.depend()
+        // this->dep对象
+
         Dep.target.addDep(this);
+        // watcher.addDep(dep);
     },
 
     removeSub: function(sub) {
@@ -138,9 +146,15 @@ Dep.prototype = {
     },
 
     notify: function() {
+        // dep.notify();
+        // this->dep对象
+        
         this.subs.forEach(function(sub) {
             sub.update();
         });
+        // this.subs.forEach(function(sub) {
+        //     watcher.update();
+        // });
         
     }
 };

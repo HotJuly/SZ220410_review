@@ -8,6 +8,7 @@
     <div id="app">
       <p class="b">{{msg}}</p>
       <p class="b">{{person.name}}</p>
+      <p class="b">{{arr.2}}</p>
     </div>
     <script src="./js/observer.js"></script>
     <script src="./js/watcher.js"></script>
@@ -49,11 +50,13 @@
           person:{
             name:"xiaoming",
             msg:"123"
-          }
+          },
+          arr:[0,1,2]
         }
       });
 
-      // vm.msg = "hello world";
+      vm.msg = "hello world";
+      vm.arr[2] = 7;
       /*
         以上代码会触发的代码流程:
           1.对vm.msg进行赋值操作,会触发数据代理的set方法

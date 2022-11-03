@@ -199,8 +199,14 @@ var compileUtil = {
             每执行一次bind方法,就会创建一个对应的watcher对象
             完整说法:项目中,每具有一个插值表达式,就会生成一个对应的watcher对象
         */
-        // new Watcher(vm, exp, function(value, oldValue) {
-        //     updaterFn && updaterFn(node, value, oldValue);
+        new Watcher(vm, exp, function(value, oldValue) {
+            updaterFn && updaterFn(node, value, oldValue);
+        });
+
+        // new Watcher(vm, "msg", function(value, oldValue) {
+            // 此处通过闭包的形式,缓存了"msg"对应的更新器函数(文本更新器)
+            // 此处还是使用了闭包,缓存了当前表达式对应的文本节点,方便后续修改
+        //     textUpdater && textUpdater(text节点, value, oldValue);
         // });
 
     },
